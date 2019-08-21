@@ -1,4 +1,4 @@
-package Lesson_1.FruitBox;
+package Lesson1.FruitBox;
 
 import java.util.ArrayList;
 
