@@ -8,18 +8,18 @@
     <HBox fx:id="upperPanel">
         <TextField HBox.hgrow="ALWAYS" promptText="Логин" fx:id="loginField"/>
         <PasswordField  promptText="Пароль" fx:id="passwordField" onAction="#tryToAuth"/>
-        <Button text="Aвторизоваться" onAction="#tryToAuth"/>
+        <Button text="Aвторизоваться" onAction="#tryToAuth" />
     </HBox>
 
-    <HBox VBox.vgrow="ALWAYS" >
-        <VBox HBox.hgrow="ALWAYS" >
+    <HBox>
+        <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
             <ListView fx:id="listView" />
-            <HBox fx:id="bottomPanel" managed="false" visible="false" alignment="BOTTOM_CENTER" HBox.hgrow="ALWAYS">
-                <TextField fx:id="textField" onAction="#sendMsg" promptText="Введите текст" HBox.hgrow="ALWAYS" />
+            <HBox fx:id="bottomPanel" managed="false" visible="false">
+                <TextField fx:id="textField" onAction="#sendMsg" promptText="Введите текст" />
                 <Button fx:id="btn1" onAction="#sendMsg" text="Send" />
             </HBox>
         </VBox>
-        <ListView fx:id="clientList" managed="false" onMouseClicked="#selectClient" visible="false"></ListView>
+        <ListView fx:id="clientList" managed="false" onMouseClicked="#selectClient" visible="false" maxWidth="150"></ListView>
     </HBox>
 
 </VBox>
