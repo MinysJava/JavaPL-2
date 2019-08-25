@@ -1,5 +1,7 @@
 package Lesson_2.server;
 
+import Lesson_2.client.Controller;
+
 import java.sql.*;
 
 public class AuthService {
@@ -36,7 +38,7 @@ public class AuthService {
             ResultSet rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
-                String str = rs.getString(1);
+//                String str = rs.getString(1);
                 return rs.getString(1);
             }
 
@@ -69,6 +71,23 @@ public class AuthService {
         }
 
         return false;
+    }
+
+    public static String changeNicke(String oldNicke, String newNicke){                         // метод для смены ника
+        String sql = String.format("SELECT nickname FROM users WHERE nickname = '%s'", newNicke);       // проверяем занят ник или нет
+
+        try {
+            ResultSet rs1 = stmt.executeQuery(sql);
+
+            if (!rs1.next()) {
+                String sql2 = String.format("UPDATE users SET nickname = '%s' WHERE nickname = '%s'", newNicke, oldNicke);      //меняем ник в БД
+                int rs2 = stmt.executeUpdate(sql2);
+                return newNicke;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void disconnect() {

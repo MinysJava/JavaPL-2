@@ -69,6 +69,17 @@ public class ClientHandler {
                                     AuthService.blackList(nick, tokens[1]);
                                     sendMsg("Вы добавили пользователя " + tokens[1] + " в черный список");
                                 }
+                                if (str.startsWith("/cn ")) {                                                              // команда на смену ника
+                                    String[] tokens = str.split(" ");
+                                    String newNick = AuthService.changeNicke(nick, tokens[1]);
+                                    if (newNick != null){
+                                        nick = tokens[1];
+                                        sendMsg("Вы изменили ник на " + tokens[1]);
+                                        server.broadcastClientList();
+                                    } else {
+                                        sendMsg("Ник " + tokens[1] + " уже занят.");
+                                    }
+                                }
                             } else {
                                 server.broadcastMsg(ClientHandler.this,nick + ": " + str, nick);
                             }
