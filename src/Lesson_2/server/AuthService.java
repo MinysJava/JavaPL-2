@@ -18,7 +18,7 @@ public class AuthService {
         }
     }
 
-    public static void setNewUsers(int id, String login, String pass, String nickName) {        // добавил метод для занесения пользователей. пароль храниться в хеше
+    public static void setNewUsers(int id, String login, String pass, String nickName) {
         int hash = pass.hashCode();
         String sql = String.format("INSERT INTO users (id, login, password, nickname) VALUES('%s', '%s', '%s', '%s')", id, login, hash, nickName);
 
@@ -32,7 +32,7 @@ public class AuthService {
 
     public static String getNickByLoginAndPass(String login, String pass) {
         int hash = pass.hashCode();
-        String sql = String.format("SELECT nickname FROM users where login = '%s' and password = '%s'", login, hash);   // сравнивает хеш паролей
+        String sql = String.format("SELECT nickname FROM users where login = '%s' and password = '%s'", login, hash);
 
         try {
             ResultSet rs = stmt.executeQuery(sql);
@@ -49,7 +49,7 @@ public class AuthService {
         return null;
     }
 
-    public static void blackList(String userNick, String blockNick){                    // добавляем в черный список
+    public static void blackList(String userNick, String blockNick){
         String sql = String.format("INSERT INTO BlackList (user, BlockUser) VALUES('%s', '%s')", userNick, blockNick);
         try {
             int t = stmt.executeUpdate(sql);
@@ -58,7 +58,7 @@ public class AuthService {
         }
     }
 
-    public static boolean checkBlackList(String userNick, String blockNick) {          // проверяем на наличее в черном списке
+    public static boolean checkBlackList(String userNick, String blockNick) {
         String sql = String.format("SELECT BlockUser FROM BlackList where user = '%s' and BlockUser = '%s'", blockNick, userNick);
 
         try {
@@ -73,14 +73,14 @@ public class AuthService {
         return false;
     }
 
-    public static String changeNicke(String oldNicke, String newNicke){                         // метод для смены ника
-        String sql = String.format("SELECT nickname FROM users WHERE nickname = '%s'", newNicke);       // проверяем занят ник или нет
+    public static String changeNicke(String oldNicke, String newNicke){
+        String sql = String.format("SELECT nickname FROM users WHERE nickname = '%s'", newNicke);
 
         try {
             ResultSet rs1 = stmt.executeQuery(sql);
 
             if (!rs1.next()) {
-                String sql2 = String.format("UPDATE users SET nickname = '%s' WHERE nickname = '%s'", newNicke, oldNicke);      //меняем ник в БД
+                String sql2 = String.format("UPDATE users SET nickname = '%s' WHERE nickname = '%s'", newNicke, oldNicke);
                 int rs2 = stmt.executeUpdate(sql2);
                 return newNicke;
             }

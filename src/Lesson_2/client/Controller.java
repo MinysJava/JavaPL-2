@@ -117,7 +117,7 @@ public class Controller {
 
                                 Platform.runLater(new Runnable() {
                                     @Override
-                                    public void run() {             // вывод сообщения с права моих с лева чужих
+                                    public void run() {
                                         Label label = new Label(str + "\n");
                                         VBox vBox = new VBox();
                                         String[] tokens = str.split(" ");
