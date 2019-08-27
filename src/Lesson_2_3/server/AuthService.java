@@ -1,6 +1,4 @@
-package Lesson_2.server;
-
-import Lesson_2.client.Controller;
+package Lesson_2_3.server;
 
 import java.sql.*;
 

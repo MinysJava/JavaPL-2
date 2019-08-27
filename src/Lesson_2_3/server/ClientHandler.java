@@ -1,8 +1,6 @@
-package Lesson_2.server;
+package Lesson_2_3.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,7 @@ public class ClientHandler {
     private Server server;
     private String nick;
     List<String> blackList;
+//    File log;
 
     public String getNick() {
         return nick;
@@ -39,7 +38,7 @@ public class ClientHandler {
                                 String newNick = AuthService.getNickByLoginAndPass(tokens[1], tokens[2]);
                                 if (newNick != null) {
                                     if (!server.isNickBusy(newNick)) {
-                                        sendMsg("/authok");
+                                        sendMsg("/authok " + tokens[1]);
                                         nick = newNick;
                                         server.subscribe(ClientHandler.this);
                                         break;
