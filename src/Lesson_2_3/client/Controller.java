@@ -88,6 +88,10 @@ public class Controller {
                             if (str.startsWith("/authok")) {
                                 setAuthorized(true);
 //----------------------------------------------------------------------------------------------------------------------------
+                                if (!new File("\\Log").exists()){
+                                    new File("\\Log").mkdir();
+                                }
+
                                 String[] tokens = str.split(" ");                                       // создаем файл лога при авторизации
                                 log = new File("Log\\history_" + tokens[1] +".txt");
                                 FileOutputStream writeLog = new FileOutputStream(log, true);
