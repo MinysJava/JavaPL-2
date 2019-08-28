@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
 public class Controller {
@@ -86,12 +87,41 @@ public class Controller {
                             String str = in.readUTF();
                             if (str.startsWith("/authok")) {
                                 setAuthorized(true);
-                                String[] tokens = str.split(" ");
+//----------------------------------------------------------------------------------------------------------------------------
+                                String[] tokens = str.split(" ");                                       // создаем файл лога при авторизации
                                 log = new File("Log\\history_" + tokens[1] +".txt");
                                 FileOutputStream writeLog = new FileOutputStream(log, true);
                                 byte[] outData = "".getBytes();
                                 writeLog.write(outData);
                                 writeLog.close();
+//----------------------------------------------------------------------------------------------------------------------------
+                                FileReader logReader = new FileReader(log);                              // эта часть кода считывает историю из файла лога и выводит последние 100 сообщений
+                                BufferedReader logBufferedReader = new BufferedReader(logReader);
+                                String logHistoryLine;
+                                ArrayList arrayHistoryLog = new ArrayList();
+
+                                while((logHistoryLine = logBufferedReader.readLine()) != null) {        //считываем лог построчно и заполняем строками массив
+                                    arrayHistoryLog.add(logHistoryLine);
+                                }
+
+                                for(int i = arrayHistoryLog.size() - 100; i < arrayHistoryLog.size(); i++){ // в цикле выводим последние 100 сообщений
+                                    if (i >= 0) {
+                                        String hMsg = (String) arrayHistoryLog.get(i);
+                                        Label label = new Label(hMsg + "\n");
+                                        VBox vBox = new VBox();
+                                        String[] hTokens = hMsg.split(" ");
+                                        System.out.println(tokens[2]);
+                                        if (hTokens[0].equals(tokens[2] + ":")) {
+                                            vBox.setAlignment(Pos.TOP_RIGHT);
+                                        } else {
+                                            vBox.setAlignment(Pos.TOP_LEFT);
+                                        }
+                                        vBox.getChildren().add(label);
+
+                                        listView.getItems().add(vBox);
+                                    }
+                                }
+//----------------------------------------------------------------------------------------------------------------------------
                                 break;
                             } else {
 
@@ -123,7 +153,8 @@ public class Controller {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-                                        FileOutputStream writeLog = null;
+//----------------------------------------------------------------------------------------------------------
+                                        FileOutputStream writeLog = null;                           // Записываем сообщение в лог когда оно приходит на клиент
                                         try {
                                             writeLog = new FileOutputStream(log, true);
                                         } catch (FileNotFoundException e) {
@@ -140,6 +171,7 @@ public class Controller {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
+//-------------------------------------------------------------------------------------------------------
                                         Label label = new Label(str + "\n");
                                         VBox vBox = new VBox();
                                         String[] tokens = str.split(" ");
@@ -188,7 +220,6 @@ public class Controller {
     public void sendMsg() {
         try {
             msg = textField.getText();
-
             out.writeUTF(msg);
             textField.clear();
             textField.requestFocus();
