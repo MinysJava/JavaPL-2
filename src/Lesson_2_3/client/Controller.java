@@ -107,6 +107,7 @@ public class Controller {
                                 while((logHistoryLine = logBufferedReader.readLine()) != null) {        //считываем лог построчно и заполняем строками массив
                                     arrayHistoryLog.add(logHistoryLine);
                                 }
+                                logReader.close();
 
                                 for(int i = arrayHistoryLog.size() - 100; i < arrayHistoryLog.size(); i++){ // в цикле выводим последние 100 сообщений
                                     if (i >= 0) {
