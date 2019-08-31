@@ -1,8 +1,6 @@
-package Lesson_2.server;
+package Lesson_2_3.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,7 @@ public class ClientHandler {
     private Server server;
     private String nick;
     List<String> blackList;
+//    File log;
 
     public String getNick() {
         return nick;
@@ -39,7 +38,7 @@ public class ClientHandler {
                                 String newNick = AuthService.getNickByLoginAndPass(tokens[1], tokens[2]);
                                 if (newNick != null) {
                                     if (!server.isNickBusy(newNick)) {
-                                        sendMsg("/authok");
+                                        sendMsg("/authok " + tokens[1] + " " + newNick);
                                         nick = newNick;
                                         server.subscribe(ClientHandler.this);
                                         break;
@@ -69,7 +68,7 @@ public class ClientHandler {
                                     AuthService.blackList(nick, tokens[1]);
                                     sendMsg("Вы добавили пользователя " + tokens[1] + " в черный список");
                                 }
-                                if (str.startsWith("/cn ")) {                                                              // команда на смену ника
+                                if (str.startsWith("/cn ")) {
                                     String[] tokens = str.split(" ");
                                     String newNick = AuthService.changeNicke(nick, tokens[1]);
                                     if (newNick != null){

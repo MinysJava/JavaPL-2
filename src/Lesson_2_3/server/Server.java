@@ -1,4 +1,4 @@
-package Lesson_2.server;
+package Lesson_2_3.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -18,9 +18,9 @@ public class Server {
             server = new ServerSocket(8189);
             System.out.println("Сервер запущен");
 
-//            AuthService.setNewUsers(1, "login1", "pass1", "nik1");        //  добавляем пользователей в таблицу
+//            AuthService.setNewUsers(1, "login1", "pass1", "nik1");
 //            AuthService.setNewUsers(2, "login2", "pass2", "nik2");
-//            AuthService.setNewUsers(3, "login3", "pass3", "nik3");
+//            AuthService.setNewUsers(3, "login3", "pass2", "nik3");
 
             while (true) {
                 socket = server.accept();
