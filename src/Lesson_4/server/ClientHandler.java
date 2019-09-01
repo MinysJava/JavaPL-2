@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ClientHandler {
 
@@ -28,8 +30,11 @@ public class ClientHandler {
             this.server = server;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
+            ExecutorService threadPool = Executors.newFixedThreadPool(AuthService.numberRow());
 
-            new Thread(new Runnable() {
+//            new Thread(new Runnable() {
+//                @Override
+            threadPool.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -106,7 +111,9 @@ public class ClientHandler {
                     }
                     server.unsubscribe(ClientHandler.this);
                 }
-            }).start();
+
+            });
+            threadPool.shutdown();
 
         } catch (IOException e) {
             e.printStackTrace();

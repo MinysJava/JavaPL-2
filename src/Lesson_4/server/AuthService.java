@@ -88,6 +88,21 @@ public class AuthService {
         return null;
     }
 
+    public static int numberRow() {
+        String sql = String.format("SELECT nickname FROM users");
+        int result = 1;
+
+        try {
+            ResultSet rs1 = stmt.executeQuery(sql);
+            rs1.afterLast();
+            result = rs1.getRow();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public static void disconnect() {
         try {
             connection.close();

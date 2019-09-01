@@ -3,6 +3,7 @@ package Lesson_4;
 public class MyThreadClass {
     private final Object lock = new Object();
     private volatile char symbol = 'A';
+    private int count = 5;
 
     public static void main(String[] args) {
         MyThreadClass mc = new MyThreadClass();
@@ -23,7 +24,7 @@ public class MyThreadClass {
     public void printA() {
         synchronized (lock){
             try {
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < count; i++) {
                     while (symbol != 'A') {
                         lock.wait();
                     }
@@ -40,7 +41,7 @@ public class MyThreadClass {
     public void printB() {
         synchronized (lock){
             try {
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < count; i++) {
                     while (symbol != 'B') {
                         lock.wait();
                     }
@@ -57,7 +58,7 @@ public class MyThreadClass {
     public void printC() {
         synchronized (lock){
             try {
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < count; i++) {
                     while (symbol != 'C') {
                         lock.wait();
                     }
