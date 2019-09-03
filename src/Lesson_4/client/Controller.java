@@ -1,4 +1,4 @@
-package Lesson_2_3.client;
+package Lesson_4.client;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -113,7 +113,6 @@ public class Controller {
                                         Label label = new Label(hMsg + "\n");
                                         VBox vBox = new VBox();
                                         String[] hTokens = hMsg.split(" ");
-                                        System.out.println(tokens[2]);
                                         if (hTokens[0].equals(tokens[2] + ":")) {
                                             vBox.setAlignment(Pos.TOP_RIGHT);
                                         } else {
