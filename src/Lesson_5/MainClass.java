@@ -1,10 +1,8 @@
 package Lesson_5;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class MainClass {
     public static final int CARS_COUNT = 4;
+
     public static void main(String[] args) {
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
         Race race = new Race(new Road(60), new Tunnel(), new Road(40));
@@ -15,7 +13,25 @@ public class MainClass {
         for (int i = 0; i < cars.length; i++) {
             new Thread(cars[i]).start();
         }
+
+        try {
+            Car.cdl.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Car.cdl2.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
+
+        try {
+            Car.cdl3.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
     }
 }
