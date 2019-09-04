@@ -6,12 +6,11 @@ import java.util.concurrent.Semaphore;
 public class Car implements Runnable {
     private static int CARS_COUNT;
     private static int win = 0;
-    public static final CountDownLatch cdl = new CountDownLatch(4);
-    public static final CountDownLatch cdl2 = new CountDownLatch(4);
-    public static final CountDownLatch cdl3 = new CountDownLatch(4);
-    static Semaphore smp = new Semaphore( 2);
+    public static CountDownLatch cdl;
+    public static CountDownLatch cdl2;
+    public static CountDownLatch cdl3;
+    static Semaphore smp;
     static Semaphore smp1 = new Semaphore( 1);
-
 
     static {
         CARS_COUNT = 0;
@@ -25,7 +24,13 @@ public class Car implements Runnable {
     public int getSpeed() {
         return speed;
     }
-    public Car(Race race, int speed) {
+    public Car(Race race, int speed, int carsN) {
+
+        cdl = new CountDownLatch(carsN);
+        cdl2 = new CountDownLatch(carsN);
+        cdl3 = new CountDownLatch(carsN);
+        smp = new Semaphore(carsN / 2 );
+
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;
