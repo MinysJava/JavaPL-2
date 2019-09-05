@@ -53,12 +53,7 @@ public class Car implements Runnable {
         }
 
         for (int i = 0; i < race.getStages().size(); i++) {
-
-            if (race.getStages().get(i).getClass().equals(Tunnel.class) ){
-                race.getStages().get(i).go(this);
-            }else {
-                race.getStages().get(i).go(this);
-            }
+              race.getStages().get(i).go(this);
         }
         cdl3.countDown();
         try {
